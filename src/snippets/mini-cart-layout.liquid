@@ -1,0 +1,122 @@
+{%- assign checkout_btn = true -%}
+<div class="mini-cart">
+  <form class="cart-page__form" action="/cart" method="post" novalidate>
+    <div class="mini-cart__content">
+      <div class="cart__item-list">
+        {%- for item in cart.items -%}
+          {%- for tag in item.product.tags -%}
+            {%- if tag == 'cite' -%}
+              {%- assign checkout_btn = false -%}
+            {%- endif -%}
+          {%- endfor -%}
+          <div class="mini-cart__item">
+            <div class="mini-cart__image">
+              <a href="{{ item.url | within: collections.all }}">
+                {%- include 'image' img: item.image , img_respond: false, img_size: '360x' -%}
+              </a>
+            </div>
+            <div class="mini-cart__details">
+              <div class="mini-cart__details-card">
+                <a href="{{ item.url }}"><h3>{{ item.product.title }}</h3>
+                  {%- unless item.product.has_only_default_variant -%}
+                    <span class="variant">{{ 'cart.label.size' | t }}{{ item.variant.title }}</span>
+                  {%- endunless -%}
+                </a>
+                <div class="mini-cart__meta">
+                  {%- assign propertySize = item.properties | size -%}
+                  {%- if propertySize > 0 -%}
+                    {%- for p in item.properties -%}
+                      {%- assign first_character_in_key = p.first | truncate: 1, '' -%}
+                      {%- unless p.last == blank or first_character_in_key == '_' -%}
+                        {{- p.first -}}:
+                        {%- if p.last contains '/uploads/' -%}
+                          <a href="{{ p.last }}">{{ p.last | split: '/' | last }}</a>
+                        {%- else -%}
+                          {{- p.last -}}
+                        {%- endif -%}
+                      {%- endunless -%}
+                    {%- endfor -%}
+                  {%- endif -%}
+                  <div data-label="{{ 'cart.label.price' | t }}">
+                    {%- if item.original_line_price != item.line_price -%}
+                      <span class="visually-hidden">{{ 'cart.label.discounted_price' | t }}</span>
+                      {{- 'cart.label.price' | t }} {{ item.price | money -}}
+                      <span>{{ 'cart.label.original_price' | t }}</span>
+                      <s>{{ item.original_price | money }}</s>
+                    {%- else -%}
+                      {{- 'cart.label.price' | t }} {{ item.price | money -}}
+                    {%- endif -%}
+                  </div>
+                  {%- if item.variant.inventory_management == "shopify" -%}
+                    {%- assign max_quantity = item.variant.inventory_quantity -%}
+                  {%- else -%}
+                    {%- assign max_quantity = 10 -%}
+                  {%- endif -%}
+
+                  <div class="mini-cart__quantity_remove">
+                    <div class="mini-cart__qty quantity-holder">
+                      <label class="label--hidden" for="updates_{{ item.id }}">{{ 'cart.minicart.quantity' | t }}:</label>
+                      <a class="qtyminus{% if item.quantity <= 1 %} limit_reached{% endif %}" data-field="updates_{{ item.id }}"><span></span></a>
+                      <input type="number" name="updates[]" id="updates_{{ item.id }}" class="quantity" value="{{ item.quantity }}" min="1" max="{{ max_quantity }}" pattern="[0-9]*" data-cart-quantity data-update-quantity="{{ forloop.index }}"/>
+                      <a class="qtyplus{% if max_quantity == item.quantity %} limit_reached{% endif %}" data-field="updates_{{ item.id }}"><span></span></a>
+                    </div>
+                  </div>
+
+                </div>
+
+                <a class="remove-item classic-link{% if isBundle %} remove-bundle{% endif %}"{% unless isBundle %} data-cart-remove-id="{{item.id}}"{% endunless %}>
+                  {{- 'cart.general.remove' | t -}}
+                </a>
+              </div>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+      {%- if cart.items.size == 0 -%}
+        <div class="mini-cart__item empty-cart">
+          <p>{{ 'cart.minicart.empty_cart' | t }}</p>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="mini-cart__footer">
+      <div class="mini-cart__totals">
+        <div class="mini-cart__big-total">
+          <p>{{ 'cart.label.subtotal' | t }}</p>
+        </div>
+        <div class="mini-cart__total-price">
+          <p>{{ cart.total_price | money }}</p>
+          {%- if cart.total_discounts > 0 -%}
+            <p>{{ 'cart.general.savings' | t }} {{ cart.total_discounts }}</p>
+          {%- endif -%}
+        </div>
+      </div>
+      <div class="mini-cart__actions">
+        {%- if checkout_btn -%}
+          {%- if cart.items.size == 0 -%}
+            <a href="/collections/all" class="btn">{{ 'cart.general.continue_browsing' | t }}</a>
+          {%- else -%}
+          <button data-checkout-btn name="checkout" class="btn btn--checkout" value="{{ 'cart.general.checkout' | t }}"><span>{{ 'cart.general.checkout' | t }}</span></button>
+          {%- endif  -%}
+        {%- else -%}
+          <a href="/cart" name="checkout" class="btn btn--checkout btn--wide"><span>{{ 'cart.minicart.edit_cart' | t }}</span></a>
+        {%- endif -%}
+      </div>
+      <div class="mini-cart__actions-footer">
+        <a href="/pages/contact-us" class="minicart-btn">
+          <img class="phone" src="{{ 'icon-phone.svg' | asset_url }}" alt="{{ 'cart.minicart.customer_care' | t }}">
+          <span>{{ 'cart.minicart.customer_care' | t }}</span>
+        </a>
+        {%- comment %}
+        Removing link until page is designed
+         <a href="pages/boutiques" class="minicart-btn">
+          <img src="{{ 'icon-location.svg' | asset_url }}" alt="{{ 'cart.minicart.find_in_boutique' | t }}">
+          <span>{{ 'cart.minicart.find_in_boutique' | t }}</span>
+        </a> {% endcomment -%}
+      </div>
+      {%- if checkout_btn -%}
+        <a href="/cart" class="classic-link"><span>{{ 'cart.minicart.edit_cart' | t }}</span></a>
+      {%- endif -%}
+    </div>
+  </form>
+</div>

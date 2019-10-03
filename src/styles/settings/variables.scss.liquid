@@ -1,0 +1,252 @@
+/*================ Color Variables ================*/
+
+// Text colors
+$color-text: #000000; // black
+$color-text-shadow: rgba(0, 0, 0, 0.1);
+$color-body-text: #3E3E3E; //dark grey
+$color-sale-text: red;
+$color-text-field: white; //
+$color-text-field-text: #666666; //
+$color-navigation-text: #000000; //
+
+// Button colors
+$color-btn-primary: #3E3E3E; // dark grey
+$color-btn-primary-text: white; //
+$color-small-button: white; //
+$color-small-button-text: #3E3E3E; //
+
+// Link buttons and secondary cta
+$color-link: $color-text; //
+$opacity-link-hover: 1;
+$transition-link-hover: 0.1s cubic-bezier(0.44, 0.13, 0.48, 0.87);
+$trans-links-buttons: all 200 cubic-bezier(0.645, 0.045, 0.355, 1);
+
+// Backgrounds
+$color-body: white;
+$color-bg: #DDDDDD; //
+$color-drawer-background: rgba(0, 0, 0, 0.6);
+$color-bg-alt: #A7A6A6; //
+$color-top-bg: #F6F5F5; // light grey
+
+// Footer
+$color-footer-text: #F7F7F7; //
+$color-footer-bg: #3E3E3E; //
+
+// Overlays
+$color-overlay-title-text: white;
+$color-image-overlay: #3d4246;
+$opacity-image-overlay: 0.25;
+
+// Border colors
+$color-border: #707070; //
+
+// Helper colors for form error states
+$color-disabled: #eff0f1;
+$color-disabled-border: #f4f4f4;
+$color-error: #d20000;
+$color-error-bg: #fff8f8;
+$color-success: #19a340;
+$color-success-bg: #f8fff9;
+
+// Forms
+$color-form-text: #333;
+$color-error-input-text: $color-error;
+$input-padding-top-bottom: 6px;
+$input-padding-left-right: 10px;
+$input-padding-top-bottom-small: 4px;
+$input-padding-left-right-small: 8px;
+$input-group-height: 46px;
+$input-group-height-small: 42px;
+
+// Social icons
+$color-facebook: #3b5998;
+$color-twitter: #00aced;
+$color-pinterest: #cb2027;
+
+/*============================================================================
+  Grid Breakpoints and Class Names
+    - Do not change the variable names
+==============================================================================*/
+$grid-small: 345px;
+$grid-medium: 750px;
+$grid-large: 1100px;
+$grid-widescreen: 1400px;
+$grid-gutter: 30px;
+$grid-gutter-mobile: 22px;
+
+$xsmall: 'xsmall';
+$small: 'small';
+$medium: 'medium';
+$medium-down: 'medium-down';
+$medium-up: 'medium-up';
+$large: 'large';
+$large-down: 'large-down';
+$large-up: 'large-up';
+$widescreen: 'widescreen';
+
+// The `$breakpoints` list is used to build our media queries.
+// You can use these in the media-query mixin.
+$breakpoints: (
+        $xsmall '(max-width: #{$grid-small - 1})',
+        $small '(max-width: #{$grid-medium - 1})',
+        $medium '(min-width: #{$grid-medium}) and (max-width: #{$grid-large - 1})',
+        $medium-down '(max-width: #{$grid-large - 1})',
+        $medium-up '(min-width: #{$grid-medium})',
+        $large '(min-width: #{$grid-large}) and (max-width: #{$grid-widescreen - 1})',
+        $large-down '(max-width: #{$grid-widescreen - 1})',
+        $large-up '(min-width: #{$grid-large})',
+        $widescreen '(min-width: #{$grid-widescreen})'
+);
+
+/*============================================================================
+  Generate breakpoint-specific column widths and push classes
+    - Default column widths: $breakpoint-has-widths: ($small, $medium-up);
+    - Default is no push classes
+    - Will not work if `styles/global/grid.scss` is removed
+==============================================================================*/
+$breakpoint-has-widths: ($xsmall, $small, $medium, $medium-up, $medium-down, $large-up, $widescreen);
+$breakpoint-has-push: ($small, $medium-up, $large-up, $widescreen);
+
+/*================ Sizing Variables ================*/
+$width-site: 1440px;
+$width-site--wide: 1640px;
+$gutter-site: 30px;
+$gutter: $gutter-site;
+$gutter-large: 60px;
+$gutter-mobile: 20px;
+$section-spacing: 30px;
+$section-spacing-small: 20px;
+$border-radius: 0;
+/*================ Z-Index ================*/
+$z-index-dropdown: 2;
+$z-index-skip-to-content: 10000; // really high to be safe of app markup
+
+/*================ SVG ================*/
+$svg-select-icon: #{'{{ "ico-select.svg" | asset_url }}'};
+$ajax-loader: #{'{{ "ajax-loader.gif" | asset_url }}'};
+
+$video-play: #{'{{ "play.png" | asset_url }}'};
+
+$svg-arrow-up: #{'{{ "chevron-up.svg" | asset_url }}'};
+$svg-arrow-left: #{'{{ "chevron-left.svg" | asset_url }}'};
+$svg-arrow-right: #{'{{ "chevron-right.svg" | asset_url }}'};
+$svg-arrow-down: #{'{{ "chevron-down.svg" | asset_url }}'};
+$svg-arrow-up-white: #{'{{ "chevron-up--white.svg" | asset_url }}'};
+$svg-arrow-down-white: #{'{{ "chevron-down--white.svg" | asset_url }}'};
+
+// Lazy loading styles
+$svg-loader: #{'{{ "loader.svg" | asset_url }}'};
+$svg-load-and: #{'{{ "load-and.svg" | asset_url }}'};
+$anim-length-slow: 200ms;
+$trans-lazy-images: opacity $anim-length-slow ease;
+
+/*================ Typography ================*/
+
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-bold: 700;
+
+@font-face {
+  font-family: 'AccentGraphicMedium';
+  src: url(#{'{{ "AccentGraphicMedium.woff2" | asset_url }}'}) format('woff2'),
+  url(#{'{{ "AccentGraphicMedium.woff" | asset_url }}'}) format('woff');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Theinhardt';
+  src: url(#{'{{ "Theinhardt-Light.woff2" | asset_url }}'}) format('woff2'),
+  url(#{'{{ "Theinhardt-Light.woff" | asset_url }}'}) format('woff');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Theinhardt';
+  src: url(#{'{{ "Theinhardt-Regular.woff2" | asset_url }}'}) format('woff2'),
+  url(#{'{{ "Theinhardt-Regular.woff" | asset_url }}'}) format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+$font-stack-header: 'AccentGraphicMedium';
+$font-weight-header: 400;
+$font-size-header: 30px;
+
+$font-stack-body: 'Theinhardt';
+$font-size-base: 16px; // Henseforth known as 1em
+
+$font-stack-cart-notification: century-gothic, sans-serif;
+
+$font-size-mobile-input: 16px; // min 16px to prevent zooming
+$font-stack-footer: $font-stack-body;
+
+.arrow-right {
+  content: '';
+  box-sizing: content-box;
+  display: inline-block;
+  width: 30px;
+  height: 45px;
+  margin-right: -30px;
+  @include media-query($medium) {
+    margin-right: -25px;
+  }
+  @include media-query($widescreen) {
+    margin-right: 0;
+  }
+  background: {
+    image: url($svg-arrow-right);
+    repeat: no-repeat;
+    position: center;
+    color: transparent;
+  }
+}
+.arrow-left {
+  content: '';
+  box-sizing: content-box;
+  display: inline-block;
+  width: 30px;
+  height: 45px;
+  margin-left: -30px;
+  @include media-query($medium) {
+    margin-left: -25px;
+  }
+  @include media-query($widescreen) {
+    margin-left: 0;
+  }
+  background: {
+    image: url($svg-arrow-left);
+    repeat: no-repeat;
+    position: center;
+    color: transparent;
+  }
+}
+.arrow-top {
+  content: '';
+  box-sizing: content-box;
+  display: inline-block;
+  width: 20px;
+  height: 23px;
+  background: {
+    image: url($svg-arrow-up);
+    repeat: no-repeat;
+    position: center;
+    color: transparent;
+  }
+}
+.arrow-bottom {
+  content: '';
+  box-sizing: content-box;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-left: -20px;
+  background: {
+    image: url($svg-arrow-down);
+    repeat: no-repeat;
+    position: center;
+    color: transparent;
+  }
+}

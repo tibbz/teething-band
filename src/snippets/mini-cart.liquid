@@ -1,0 +1,19 @@
+<div id="minicart" class="slide">
+  <div class="navbar__title navbars_top">
+    {{- 'cart.minicart.title' | t -}}
+    <hr class="items-separator">
+    <span class="cart_counter__container">
+      ( <span class="counter" data-cart-render="item_count"></span> <span class="counter_text">Item</span> )</span>
+    <div class="close-holder">
+      <a id="minicart-close" class="navbar-toggle">
+        <small>{{- 'cart.minicart.close' | t -}}</small>
+        <span></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="panel">
+    {%- include 'mini-cart-layout' -%}
+  </div>
+</div>
+

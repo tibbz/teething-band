@@ -1,0 +1,543 @@
+/*================ SASS HELPERS ================*/
+/*============================================================================
+  Strips the unit from a number.
+  @param {Number (With Unit)} $value
+  @example scss - Usage
+    $dimension: strip-units(10em);
+  @example css - CSS Output
+    $dimension: 10;
+  @return {Number (Unitless)}
+  based on https://github.com/thoughtbot/bourbon/blob/master/app/assets/stylesheets/functions/_strip-units.scss
+==============================================================================*/
+@function strip-units($value) {
+  @return ($value / ($value * 0 + 1));
+}
+
+
+/*============================================================================
+  Convert pixels to ems
+  eg. for a relational value of 12px write em(12) when the parent is 16px
+  if the parent is another value say 24px write em(12, 24)
+  Based on https://github.com/thoughtbot/bourbon/blob/master/app/assets/stylesheets/functions/_px-to-em.scss
+==============================================================================*/
+@function em($pxval, $base: $font-size-base) {
+  @if not unitless($pxval) {
+    $pxval: strip-units($pxval);
+  }
+  @if not unitless($base) {
+    $base: strip-units($base);
+  }
+  @return ($pxval / $base) * 1em;
+}
+
+/*============================================================================
+  Return a color based on the brightness of an existing color.
+  Need to pass in brightness because it is calculated with Liquid.
+  @param {Number} $brightness
+  @param {String} $color
+  @example scss - Usage
+    $focusColor: adaptiveColor(#000, 0);
+  @example css - CSS Output
+    $focusColor: #404040;
+  @return {String}
+==============================================================================*/
+
+@function adaptiveColor($color, $brightness) {
+  @if $brightness <= 26 {
+    @return lighten($color, 25%)
+  }
+  @if $brightness <= 64 {
+    @return lighten($color, 15%)
+  } @else {
+    @return darken($color, 10%)
+  }
+}
+
+
+/*================ Mixins ================*/
+
+@mixin clearfix() {
+  &::after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+
+  // sass-lint:disable
+  *zoom: 1;
+}
+
+/*============================================================================
+  Prefix mixin for generating vendor prefixes.
+  Based on https://github.com/thoughtbot/bourbon/blob/v4-stable/app/assets/stylesheets/addons/_prefixer.scss
+
+  Usage:
+    // Input:
+    .element {
+      @include prefix(transform, scale(1), ms webkit spec);
+    }
+
+    // Output:
+    .element {
+      -ms-transform: scale(1);
+      -webkit-transform: scale(1);
+      transform: scale(1);
+    }
+==============================================================================*/
+@mixin prefix($property, $value, $prefixes) {
+  @each $prefix in $prefixes {
+    @if $prefix == webkit {
+      -webkit-#{$property}: $value;
+    } @else if $prefix == moz {
+      -moz-#{$property}: $value;
+    } @else if $prefix == ms {
+      -ms-#{$property}: $value;
+    } @else if $prefix == o {
+      -o-#{$property}: $value;
+    } @else if $prefix == spec {
+      #{$property}: $value;
+    } @else  {
+      @warn 'Unrecognized prefix: #{$prefix}';
+    }
+  }
+}
+
+/*================ Media Query Mixin ================*/
+@mixin media-query($media-query) {
+  $breakpoint-found: false;
+
+  @each $breakpoint in $breakpoints {
+    $name: nth($breakpoint, 1);
+    $declaration: nth($breakpoint, 2);
+
+    @if $media-query == $name and $declaration {
+      $breakpoint-found: true;
+
+      @media only screen and #{$declaration} {
+        @content;
+      }
+    }
+  }
+
+  @if $breakpoint-found == false {
+    @warn 'Breakpoint "#{$media-query}" does not exist';
+  }
+}
+
+/*================ Responsive Show/Hide Helper ================*/
+@mixin responsive-display-helper($breakpoint: '') {
+  // sass-lint:disable no-important
+  .#{$breakpoint}show {
+    display: block !important;
+  }
+
+  .#{$breakpoint}hide {
+    display: none !important;
+  }
+}
+
+/*================ Responsive display fullsize screen Helper ================*/
+@mixin responsive-display-full($breakpoint: '') {
+  // sass-lint:disable no-important
+  .#{$breakpoint}inner-full {
+    margin: auto calc(-50vw + 50%);
+  }
+
+  .#{$breakpoint}but-half {
+    margin: auto calc(-25vw + 25%);
+  }
+}
+/*================ Responsive Text Alignment Helper ================*/
+@mixin responsive-text-align-helper($breakpoint: '') {
+  // sass-lint:disable no-important
+  .#{$breakpoint}text-left {
+    text-align: left !important;
+  }
+
+  .#{$breakpoint}text-right {
+    text-align: right !important;
+  }
+
+  .#{$breakpoint}text-center {
+    text-align: center !important;
+  }
+}
+
+
+/*================ Responsive Text Size Helper ================*/
+@mixin responsive-text-size-helper($breakpoint: '') {
+  // sass-lint:disable no-important
+  .#{$breakpoint}text-xsmall {
+    font-size: 1.3rem !important;
+  }
+  .#{$breakpoint}text-small {
+    font-size: 1.4rem !important;
+  }
+  .#{$breakpoint}text-normal {
+    font-size: 1.6rem !important;
+    text-transform: none;
+  }
+  .#{$breakpoint}text-medium {
+    font-size: 1.8rem !important;
+  }
+  .#{$breakpoint}text-large {
+    font-size: 2rem !important;
+  }
+  .#{$breakpoint}text-xlarge {
+    font-size: 3rem !important;
+  }
+
+}
+
+/*================ Responsive Sticky Helper ================*/
+
+@mixin responsive-sticky-helper($breakpoint: '') {
+  // sass-lint:disable no-important
+  .#{$breakpoint}sticky {
+    width: 100%;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index:11;
+    &:before,
+    &:after {
+      content: '';
+      display: table;
+    }
+    &.static {
+      position: absolute;
+    }
+    &.no-transition {
+      transition:all 0ms ease-in-out !important;
+    }
+  }
+}
+
+@mixin placeholder-text($color: $color-text-field-text, $opacity: 0.6) {
+  color: $color;
+  opacity: $opacity;
+}
+
+@mixin error-placeholder-text($color: $color-error-input-text, $opacity: 0.5) {
+  color: $color;
+  opacity: $opacity;
+}
+
+@mixin transform($transform) {
+  @include prefix(transform, $transform, ms webkit spec);
+}
+
+@mixin transition($transition) {
+  @include prefix(transition, $transition, ms webkit spec);
+}
+
+@mixin gradient($side, $from, $to) {
+  background: -ms-linear-gradient($side, $from 0%, $to 100%);
+  background: linear-gradient(to $side, $from 0%, $to 100%);
+}
+
+
+
+@mixin visually-hidden() {
+  // sass-lint:disable no-important
+  position: absolute !important;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+}
+
+@mixin visually-shown($position: inherit) {
+  // sass-lint:disable no-important
+  position: $position !important;
+  overflow: auto;
+  clip: auto;
+  width: auto;
+  height: auto;
+  margin: 0;
+}
+
+@mixin overlay($z-index: null) {
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: $color-image-overlay;
+    opacity: $opacity-image-overlay;
+
+    @if ($z-index) {
+      z-index: $z-index;
+    }
+  }
+}
+
+@mixin default-focus-ring() {
+  outline: 1px dotted #212121;
+  outline: 5px auto -webkit-focus-ring-color;
+}
+
+@mixin user-select($value: none) {
+  @include prefix('user-select', #{$value}, moz ms webkit spec);
+}
+
+/*============================================================================
+  Animation Classes and Keyframes
+==============================================================================*/
+
+@mixin spinner($size: 20px, $color: $color-btn-primary-text) {
+  content: '';
+  display: block;
+  width: $size;
+  height: $size;
+  position: absolute;
+  margin-left: - $size / 2;
+  margin-top: - $size / 2;
+  border-radius: 50%;
+  border: 3px solid $color;
+  border-top-color: transparent;
+}
+
+@mixin animation($animation) {
+  @include prefix(animation, #{$animation}, moz o webkit spec);
+}
+
+@mixin keyframes($name) {
+  @-webkit-keyframes #{$name} {
+    @content;
+  }
+  @-moz-keyframes #{$name} {
+    @content;
+  }
+  @-ms-keyframes #{$name} {
+    @content;
+  }
+  @keyframes #{$name} {
+    @content;
+  }
+}
+
+@include keyframes(spin) {
+  0% {
+    @include transform(rotate(0deg));
+  }
+
+  100% {
+    @include transform(rotate(360deg));
+  }
+}
+// input, textarea, button
+@mixin unstyle-control {
+  margin: 0;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background-color: transparent;
+  font-family: inherit;
+  font-style: inherit;
+  font-size: inherit;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+// ul, li, dl
+@mixin unstyle-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  // just unstyle children (NOTE: <dl> might contain <div> wrappers)
+  > li,
+  > dd,
+  > dt,
+  > div > dd,
+  > div > dt {
+    padding: 0;
+  }
+}
+
+/*---------------------------------------------------
+  Fluid type
+
+  Usage:
+    // Input:
+    .element {
+      @include prefix(transform, scale(1), ms webkit spec);
+    }
+
+    // Output:
+    .element {
+      -ms-transform: scale(1);
+      -webkit-transform: scale(1);
+      transform: scale(1);
+    }
+---------------------------------------------------*/
+// quick references to shortcut to the responsive template, or to quickly change px to rem on the fly.
+@mixin font-size($mobile-font-size, $min-desktop-font-size:null, $max-desktop-font-size:null, $min-vw:null, $max-vw:null, $default: "rem") {
+  @if $min-desktop-font-size == null {
+    $mobile-font-size: changeunit($mobile-font-size, $default);
+    font-size: $mobile-font-size;
+    @if ($testmode == true) {
+      $mobile-font-size: changeunit($mobile-font-size, "px");
+      font-size: $mobile-font-size;
+    }
+  }
+  @else {
+    @include responsive-template("font-size", $mobile-font-size, $min-desktop-font-size, $max-desktop-font-size, $min-vw, $max-vw, $default);
+  }
+}
+
+@mixin line-height($mobile-line-height, $min-desktop-line-height:null, $max-desktop-line-height:null, $min-vw:null, $max-vw:null, $default: "rem") {
+  @if $min-desktop-line-height == null {
+    $mobile-line-height: changeunit($mobile-line-height, $default);
+    line-height: $mobile-line-height;
+  }
+  @else {
+    @include responsive-template("line-height", $mobile-line-height, $min-desktop-line-height, $max-desktop-line-height, $min-vw, $max-vw, $default);
+  }
+}
+
+/*---------------------------------------------------
+Responsive Template
+  Mixin that accepts upto three different
+  sizes to output
+  - $propery = font-size, line-height, margin-down, etc
+  - $mobile-size = unchanging size on mobile
+  - $min-desktop-size = if tablet size is smaller than mobile
+  - $max-desktop-size (optional) = unchanging size on desktop
+    (If max is left blank, min-desktop-size will be used instead)
+  - $min-vw (optional) = changes when it starts (defaults to from mobile)
+  - $max-vw (optional) = changes when it ends (defaults to max width of desktop)
+  - $default (optional) = accepts px,rem,(em?)
+
+---------------------------------------------------*/
+@mixin responsive-template($property, $mobile-size, $min-desktop-size, $max-desktop-size:null, $min-vw:null, $max-vw:null, $default: "rem") {
+  @if $min-vw == null {
+    // if not specific, defaults to mobile menu
+    $min-vw: changeunit($grid-mobilemenu, px);
+  }
+
+  @if $max-vw == null {
+    @if $grid-desktop != 100% {
+      $max-vw: changeunit($grid-desktop, px);
+    }
+    @else {
+      $max-vw: changeunit($grid-widescreen, px);
+    }
+  }
+
+  $min-desktop-size-px: changeunit($min-desktop-size, px);
+  $tablet-desktop-dif: changeunit($tablet-desktop-dif, px);
+
+  @if $max-desktop-size == null and $mobile-size > $min-desktop-size {
+    $max-desktop-size: $min-desktop-size;
+    $min-desktop-size: $min-desktop-size-px - $tablet-desktop-dif;
+  }
+  @else if $max-desktop-size == null {
+    $max-desktop-size: $min-desktop-size;
+    $min-desktop-size: $mobile-size;
+  }
+
+  $mobile-size-px: changeunit($mobile-size, px);
+  $min-desktop-size-px: changeunit($min-desktop-size, px);
+  $max-desktop-size-px: changeunit($max-desktop-size, px);
+
+  $mobile-size: changeunit($mobile-size, $default);
+  $min-desktop-size: changeunit($min-desktop-size, $default);
+  $max-desktop-size: changeunit($max-desktop-size, $default);
+
+  $calc1: changeunit($max-desktop-size-px - $min-desktop-size-px, strip);
+  $calc2: changeunit($max-vw - $min-vw, strip);
+
+
+  #{$property}: $mobile-size;
+  @if ($testmode == true) {
+    #{$property}: $mobile-size-px;
+  }
+
+  @media screen and (min-width: $min-vw) {
+    #{$property}: calc(#{$min-desktop-size} + #{$calc1} * ((100vw - #{$min-vw}) / #{$calc2}));
+  }
+
+  @media screen and (min-width: $max-vw) {
+    #{$property}: $max-desktop-size;
+    @if ($testmode == true) {
+      #{$property}: $max-desktop-size-px;
+    }
+  }
+}
+
+/*----------------- Units ---------------- */
+// unit options: strip;em;rem;px
+@function changeunit($number, $unit) {
+  @if $number == null or $unit == null {
+    @return null;
+  }
+  @else {
+    @if $unit == "px" {
+      @if unit($number) == "em" {
+        $number: $number / 1em * 16px;
+      }
+      @else if unit($number) == "rem" {
+        $number: $number / 1rem * 10px;
+      }
+      @else if unitless($number) {
+        $number: $number * 1px;
+      }
+    }
+    @else if $unit == "em" {
+      @if unit($number) == "px" {
+        $number: $number / 16px * 1em;
+      }
+      @else if unit($number) == "rem" {
+        $number: $number / 1rem * 1.6em;
+      }
+      @else if unitless($number) {
+        $number: $number * 1em;
+      }
+    }
+    @else if $unit == "rem" {
+      @if unit($number) == "px" {
+        $number: $number / 10px * 1rem;
+      }
+      @else if unit($number) == "em" {
+        $number: $number / 1.6em * 1rem;
+      }
+      @else if unitless($number) {
+        $number: $number * 1em;
+      }
+    }
+    @else if $unit == "strip" {
+      @if unit($number) == "px" {
+        $number: $number / ($number * 0 + 1);
+      }
+    } // strip
+
+    @return $number;
+  }
+} // unit
+
+@mixin letter-spacing($spacing) {
+  letter-spacing: ($spacing / 1000) * 1em;
+}
+
+/* ================ Flexbox ================ */
+
+/* stylelint-disable declaration-block-no-duplicate-properties */
+@mixin display-flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+/* stylelint-enable */
+
+@mixin align-items-center {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}

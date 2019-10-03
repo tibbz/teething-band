@@ -1,0 +1,40 @@
+{%- comment -%}
+  Override default meta title and description if collection metafield is found
+{%- endcomment -%}
+{%- if mode == 'meta' -%}
+  {%- if template.name == 'collection' -%}
+    {%- if current_tags -%}
+      {%- for tag in current_tags -%}
+        {%- assign namespace = tag | handleize -%}
+        {%- if collection.metafields[namespace].meta_title != blank -%}
+          {%- assign seo_title = collection.metafields[namespace].meta_title -%}
+        {%- endif -%}
+        {%- if collection.metafields[namespace].meta_description != blank -%}
+          {%- assign page_description = collection.metafields[namespace].meta_description -%}
+        {%- endif -%}
+        {%- break -%}
+      {%- endfor -%}
+    {%- endif -%}
+  {%- endif -%}
+{%- endif -%}
+
+{%- comment -%}
+  Override default collection title and description if collection metafield is found
+{%- endcomment -%}
+{%- if mode == 'collection' -%}
+  {%- if current_tags -%}
+    {%- for tag in current_tags -%}
+      {%- assign namespace = tag | handleize -%}
+      {%- if collection.metafields[namespace].collection_title != blank -%}
+        {%- assign collectionTitle = collection.metafields[namespace].collection_title -%}
+      {%- endif -%}
+      {%- if collection.metafields[namespace].collection_description != blank -%}
+        {%- assign collectionDescription = collection.metafields[namespace].collection_description -%}
+      {%- endif -%}
+      {%- if collection.metafields[namespace].collection_image != blank -%}
+        {%- assign collectionImage = collection.metafields[namespace].collection_image -%}
+      {%- endif -%}
+      {%- break -%}
+    {%- endfor -%}
+  {%- endif -%}
+{%- endif -%}

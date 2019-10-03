@@ -1,0 +1,27 @@
+<div class="mega-menu">
+  <span class="mega-menu__pointer"></span>
+  {%- for link in linklists[section.settings.main_linklist].links -%}
+    {%- assign contains_megamenu = false -%}
+    {%- assign index_item = forloop.index -%}
+
+    {%- for block in section.blocks -%}
+      {%- assign item = block.settings.attached_item | plus: 0 -%}
+      {%- if item == index_item -%}
+        {%- assign contains_megamenu = true -%}
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- if contains_megamenu -%}
+      {%- for block in section.blocks -%}
+        {%- assign item = block.settings.attached_item | plus: 0 -%}
+        {%- if item == index_item -%}
+          {%- if block.type == 'mega_type_1' -%}
+            <div class="mega-menu__navigation-holder type-1 menu-{{ block.settings.attached_item }}">
+                {%- include 'megamenu_type_1' -%}
+            </div>
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+  {%- endfor -%}
+</div>

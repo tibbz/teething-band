@@ -1,0 +1,66 @@
+{%- unless block.settings.image == blank -%}
+  {%- assign image = block.settings.image -%}
+  {%- assign title = block.settings.title -%}
+  {%- assign sub_text = block.settings.subtitle -%}
+  {%- assign button_label = block.settings.button_text -%}
+  {%- assign img_sizes_str = "(min-width: 800px) 400px, 100vw" -%}
+  {%- assign srcset_str = "360,500" -%}
+{%- endunless -%}
+<div class="page-width">
+  <div class="grid megamenu-links__holder">
+    <div class="grid__item one-quarter">
+      <a class="mega__featured-link--container" href="{{ block.settings.article_link }}">
+        <div class="mega__featured-link--image">
+          {%
+            include 'img',
+            img_obj: image,
+            sizes_str: img_sizes_str,
+            loadbox: true,
+            loadbox_class: 'loadbox--transparent'
+            lazy: true
+          %}
+        </div>
+      </a>
+    </div>
+    {%- unless block.settings.menu_1 == blank -%}
+      {%- if block.settings.menu_1_title == blank-%}
+        {%- assign menu_1_title = linklists[block.settings.menu_1].title -%}
+      {%- else -%}
+        {%- assign menu_1_title = block.settings.menu_1_title -%}
+      {%- endif -%}
+      <div class="grid__item one-sixth">
+        {%- include 'mega-linklist' with block.settings.menu_1, menu_title: menu_1_title, title_link: block.settings.menu_1_url  -%}
+      </div>
+    {%- endunless -%}
+    {%- unless block.settings.menu_2 == blank -%}
+      {%- if block.settings.menu_2_title == blank-%}
+        {%- assign menu_2_title = linklists[block.settings.menu_2].title -%}
+      {%- else -%}
+        {%- assign menu_2_title = block.settings.menu_2_title -%}
+      {%- endif -%}
+      <div class="grid__item one-sixth">
+        {%- include 'mega-linklist' with block.settings.menu_2, menu_title: menu_2_title, title_link: block.settings.menu_2_url  -%}
+      </div>
+    {%- endunless -%}
+    {%- unless block.settings.menu_3 == blank -%}
+      {%- if block.settings.menu_3_title == blank-%}
+        {%- assign menu_3_title = linklists[block.settings.menu_3].title -%}
+      {%- else -%}
+        {%- assign menu_3_title = block.settings.menu_3_title -%}
+      {%- endif -%}
+      <div class="grid__item one-sixth">
+        {%- include 'mega-linklist' with block.settings.menu_3, menu_title: menu_3_title, title_link: block.settings.menu_3_url  -%}
+      </div>
+    {%- endunless -%}
+    {%- unless block.settings.menu_4 == blank -%}
+      {%- if block.settings.menu_4_title == blank-%}
+        {%- assign menu_4_title = linklists[block.settings.menu_4].title -%}
+      {%- else -%}
+        {%- assign menu_4_title = block.settings.menu_4_title -%}
+      {%- endif -%}
+      <div class="grid__item one-sixth">
+        {%- include 'mega-linklist' with block.settings.menu_4, menu_title: menu_4_title, title_link: block.settings.menu_4_url  -%}
+      </div>
+    {%- endunless -%}
+  </div>
+</div>

@@ -1,0 +1,209 @@
+<header role="banner" class="main-header"  data-section-id="{{ section.id }}" data-section-type="header-section">
+  <div class="page-width">
+    <div class="main-header__holder">
+      <div class="main-header__menu-minilogo">
+        <button type="button" class="navbar-toggle collapsed">
+      <span>
+        {{- 'general.accessibility.menu' | t -}}
+      </span>
+        </button>
+        <a class=" mini-logo small--hide medium--hide" href="/">
+          <img src="{{ 'teethlogo.png' | asset_url }}"
+               alt="{{ shop.name }}"
+               itemprop="logo">
+        </a>
+      </div>
+      <div class="main-header__logo-menu">
+        <a class="site-logo small--hide medium--hide" href="/">
+          <img src="{{ 'teethlogo.png' | asset_url }}"
+               alt="{{ shop.name }}"
+               itemprop="logo">
+        </a>
+        <nav role="navigation" class="site-nav--holder small--hide">
+          <ul class="site-nav medium-down--hide">
+            {%- include 'navigation-list' with section.settings.main_linklist -%}
+          </ul>
+        </nav>
+      </div>
+      <div class="main-header__search-card--container">
+        <div class="main-header__search-card">
+          {%- if shop.customer_accounts_enabled -%}
+            <a href="/account" class="medium-down--hide" title="{{ 'layout.customer.account' | t }}">
+            {%- include 'icon-account' -%}
+            <span class="label--hidden">{{ 'layout.customer.account' | t }}</span></a>
+          {%- endif -%}
+          <a  href="/search" class="btn--search medium-down--hide" title="{{ 'layout.search.title' | t }}">
+            {%- include 'icon-search' -%}
+            <span class="icon-fallback-text">{{ 'general.search.submit' | t }}</span>
+          </a>
+          <a href="/cart" class="topNav__cart open-cart" title="{{ 'layout.cart.title' | t }}">
+            <span class="label-hidden">{{ 'layout.cart.title' | t }}</span>
+            {%- include 'icon-bag' -%}
+            <span class="cart-counter" data-cart-render="item_count">
+              {{- cart.item_count -}}
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {%- include 'megamenu' -%}
+</header>
+
+{% schema %}
+  {
+  "name": "Header",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo image"
+    },
+    {
+      "type": "checkbox",
+      "id": "svg_version",
+      "label": "Logo SVG version",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Navigation"
+    },
+    {
+      "type": "link_list",
+      "id": "main_linklist",
+      "label": "Menu",
+      "default": "main-menu"
+    }
+  ],
+  "blocks": [
+    {
+    "type": "mega_type_1",
+    "name": "Mega Menu Collection",
+    "settings": [
+      {
+      "type": "select",
+      "id": "attached_item",
+      "label": "Menu item to Attach",
+      "default": "1",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "3",
+          "label": "3"
+        },
+        {
+          "value": "4",
+          "label": "4"
+        },
+        {
+          "value": "5",
+          "label": "5"
+        },
+        {
+          "value": "6",
+          "label": "6"
+        },
+        {
+          "value": "7",
+          "label": "7"
+        },
+        {
+          "value": "8",
+          "label": "8"
+        },
+        {
+          "value": "9",
+          "label": "9"
+        },
+        {
+          "value": "10",
+          "label": "10"
+        }
+        ]
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "header",
+        "content": "Menus"
+      },
+      {
+        "type": "link_list",
+        "id": "menu_1",
+        "label": "Menu 1"
+      },
+      {
+        "type": "text",
+        "id": "menu_1_title",
+        "label": "Title Overwrite"
+      },
+      {
+        "type": "url",
+        "id": "menu_1_url",
+        "label": "Menu 1 Title url"
+      },
+      {
+        "type": "link_list",
+        "id": "menu_2",
+        "label": "Menu 2"
+      },
+      {
+        "type": "text",
+        "id": "menu_2_title",
+        "label": "Title Overwrite"
+      },
+      {
+        "type": "url",
+        "id": "menu_2_url",
+        "label": "Menu 2 Title url"
+      },
+      {
+        "type": "link_list",
+        "id": "menu_3",
+        "label": "Menu 3"
+      },
+      {
+        "type": "text",
+        "id": "menu_3_title",
+        "label": "Title Overwrite"
+      },
+      {
+        "type": "url",
+        "id": "menu_3_url",
+        "label": "Menu 3 Title url"
+      },
+      {
+        "type": "header",
+        "content": "Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image",
+        "info" : "700×700"
+      },
+      {
+        "type": "url",
+        "id": "image_link",
+        "label": "Link"
+      }
+    ]
+    }
+  ]
+}
+{% endschema %}

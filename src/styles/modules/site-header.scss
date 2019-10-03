@@ -1,0 +1,335 @@
+//Site Header
+.main-header {
+
+  .site-logo.mini-logo {
+    width: 30px;
+    margin-top: -17px;
+    left: 0;
+    height: auto;
+    opacity: 1;
+    position: relative;
+    transition: all 150ms ease-in-out;
+  }
+  .mini-logo {
+    opacity: 0;
+  }
+
+  .site-logo {
+    display: block;
+
+    svg {
+      display: block;
+      width: 100%;
+    }
+  }
+
+  .main-header__holder {
+    transition: all 150ms ease-in-out;
+    padding-top: 10px;
+    @include media-query($medium-down) {
+      padding-bottom: 20px;
+      padding-top: 20px;
+      align-items: center;
+    }
+    display: flex;
+
+    .main-header__menu-minilogo {
+      flex: 1 138px;
+      display: flex;
+      margin-bottom: 4px;
+      justify-content: flex-start;
+      align-items: flex-end;
+    }
+
+    .main-header__logo-menu {
+      @include media-query($large-up) {
+        min-height: 75px;
+        flex-direction: column;
+      }
+      @include media-query($large) {
+        margin-left: -20%;
+        margin-right: -20%;
+      }
+      flex: 1 80%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      h1, .h1 {
+        margin-bottom: 0;
+      }
+
+      .site-logo {
+        width: 160px;
+        height: auto;
+        @include media-query($large-up) {
+          width: 270px;
+        }
+        .icon {
+          height: auto;
+        }
+        .icon-search, .icon-bag {
+          width: 15px;
+          height: 15px;
+        }
+      }
+    }
+
+    .main-header__search-card--container {
+      flex: 1 138px;
+    }
+
+    .main-header__search-card {
+      transition: all 150ms ease-in-out;
+      @include media-query($large-up) {
+        margin-top: -4px;
+      }
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      a {
+        color: black;
+        &:first-child {
+          margin-left: 0;
+        }
+        &:last-child {
+          margin-right: 0;
+        }
+        .icon {
+          margin: 10px;
+        }
+      }
+      .open-cart {
+        display: inline-block;
+        position: relative;
+        width: 38px;
+        @include media-query($medium-down) {
+          display: flex;
+        }
+        svg {
+          margin: 10px;
+          width: 18px;
+          height: 18px;
+          fill: transparent;
+          stroke: #000;
+        }
+        .cart-counter {
+          background: black;
+          position: absolute;
+          top: 0;
+          right: 0;
+
+          width: 18px;
+          height: 18px;
+          border-radius: 10px;
+          line-height: 20px;
+          text-align: center;
+          color: white;
+          font-weight: 500;
+          font-size: 1.4rem;
+        }
+      }
+    }
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-top: 14px;
+    transition: all 150ms ease-in-out;
+    ul.site-nav {
+      height: 30px;
+      display: flex;
+      flex-direction: row;
+
+      li {
+        display: flex;
+        align-items: stretch;
+        text-transform: uppercase;
+        font-size: 1.3rem;
+        padding: 0 15px;
+        letter-spacing: 0.15rem;
+
+        .site-nav__link {
+          color: darkgreen;
+          display: flex;
+          align-items: center;
+          position: relative;
+          &:after {
+            -webkit-transition: all 0.4s;
+            -moz-transition: all 0.4s;
+            -o-transition: all 0.4s;
+            transition: all 0.4s;
+            -webkit-transform: translateX(-50%);
+            -moz-transform: translateX(-50%);
+            -ms-transform: translateX(-50%);
+            -o-transform: translateX(-50%);
+            transform: translateX(-50%);
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: -3px;
+            width: 0;
+            height: 2px;
+            background: #474948;
+            z-index: 1;
+          }
+          &:hover, &.is-open {
+            &:after {
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+  .navbar-toggle {
+    width: 18px;
+    padding: 10px;
+    span {
+      width: 18px;
+    }
+    &::before,
+    &::after {
+      width: 18px;
+    }
+  }
+}
+
+.navbar-toggle,
+.close-icon {
+  -webkit-appearance: none !important;
+  font-size: 0;
+  background: none;
+  margin: 0;
+  border: 0;
+  cursor: pointer;
+  width: 30px;
+  height: 18px;
+  margin-left: -10px;
+  padding: 10px 13px 10px 10px;
+  display: block;
+  position: relative;
+  box-sizing: content-box;
+
+  span {
+    background: black;
+    display: block;
+    width: 30px;
+    height: 2px;
+    top: 18px;
+    position: absolute;
+    transition: all 250ms ease-in-out;
+  }
+
+  &::before,
+  &::after {
+    position: absolute;
+    transition: all 250ms ease-in-out;
+    content: "";
+    background: black;
+    width: 30px;
+    height: 2px;
+    display: block;
+  }
+
+  @include media-query($large-up) {
+    display: none;
+  }
+
+  &::before {
+    top: 12px;
+    transform: rotate(0deg);
+  }
+
+  &::after {
+    top: 24px;
+    transform: rotate(0deg);
+  }
+
+  &:not(.collapsed) {
+    span {
+      background-color: transparent;
+    }
+
+    &::before {
+      top: 18px;
+      transform: rotate(45deg);
+    }
+
+    &::after {
+      top: 18px;
+      transform: rotate(-45deg);
+    }
+  }
+}
+
+.close-icon {
+  @include media-query($large-up) {
+    display: block;
+  }
+}
+
+#minicart-close {
+  @include media-query($large-up) {
+    small {
+      display: inline-block;
+      position: relative;
+      top: -2px;
+      width: 40px;
+      height: 20px;
+      left: -40px;
+      font-size: 11px;
+    }
+  }
+
+  &::before,
+  &::after {
+    height: 2px;
+  }
+}
+
+@include media-query($large-up) {
+  .navigation_holder {
+    transition: all 250ms ease-in-out;
+    .main-header__logo-menu {
+      transition: all 250ms ease-in-out;
+      margin-top: 0;
+      h1, .h1 {
+        opacity: 1;
+        transition: opacity 150ms ease-in-out;
+      }
+    }
+    &.nav-up {
+      .main-header__holder {
+        padding-top: 20px;
+      }
+      .main-header nav ul.site-nav li .site-nav__link:after {
+        bottom: -10px;
+      }
+      top: -22px;
+      nav {
+        margin-top: 0;
+      }
+      .main-header__search-card {
+        @include media-query($medium-up) {
+          margin-top: -19px;
+        }
+      }
+      .main-header .site-logo.mini-logo {
+        opacity: 1;
+        transition-delay: 150ms;
+        display: inline-block;
+      }
+
+      .main-header__logo-menu {
+        margin-top: -48px;
+        h1, .h1 {
+          opacity: 0;
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}

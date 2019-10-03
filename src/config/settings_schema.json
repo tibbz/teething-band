@@ -1,0 +1,212 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Slate",
+    "theme_version": "0.11.0",
+    "theme_author": "Shopify",
+    "theme_documentation_url": "https://shopify.github.io/slate/",
+    "theme_support_url": "https://github.com/Shopify/slate"
+  },
+  {
+    "name": "Logos",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "main_logo",
+        "label": "Main Logo image"
+      },
+      {
+        "type": "image_picker",
+        "id": "main_logo_white",
+        "label": "Main Logo image white"
+      },
+      {
+        "type": "select",
+        "id": "text_type",
+        "label": "Home menu color",
+        "default": "white",
+        "options": [
+          {
+            "value": "white",
+            "label": "White"
+          },
+          {
+            "value": "black",
+            "label": "Black"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "select",
+        "id": "type_base_size",
+        "label": "Base size",
+        "default": "16px",
+        "options": [
+          {
+            "value": "14px",
+            "label": "14px"
+          },
+          {
+            "value": "15px",
+            "label": "15px"
+          },
+          {
+            "value": "16px",
+            "label": "16px"
+          },
+          {
+            "value": "17px",
+            "label": "17px"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "header",
+        "content": "General colors"
+      },
+      {
+        "type": "color",
+        "id": "color_primary",
+        "label": "Primary color",
+        "default": "#000",
+        "info": "Used for text links, and primary buttons"
+      },
+      {
+        "type": "color",
+        "id": "color_body_text",
+        "label": "Text color",
+        "default": "#000",
+        "info": "Color used for content and paragraph text"
+      }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Social sharing options"
+      },
+      {
+        "type": "checkbox",
+        "id": "social_sharing_blog",
+        "label": "Enable sharing for blog articles",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "share_facebook",
+        "label": "Share on Facebook",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "share_twitter",
+        "label": "Tweet on Twitter",
+        "default": true
+      },
+      {
+        "type": "header",
+        "content": "Sharing links"
+      },
+            {
+        "type": "text",
+        "id": "social_facebook_teething",
+        "label": "Teething Facebook"
+      },
+      {
+        "type": "text",
+        "id": "social_bandcamp_teething",
+        "label": "Teething Bandcamp"
+      },
+      {
+        "type": "text",
+        "id": "social_instagram_teething",
+        "label": "Teething Instagram"
+      },
+      {
+        "type": "text",
+        "id": "social_youtube_teething",
+        "label": "Teething Youtube"
+      },
+      {
+        "type": "text",
+        "id": "social_vimeo_teething",
+        "label": "Teething Vimeo"
+      },
+      {
+        "type": "text",
+        "id": "social_twitter_teething",
+        "label": "Teething Twitter"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook_luisifer",
+        "label": "Luisifer Facebook"
+      },
+      {
+        "type": "text",
+        "id": "social_instagram_luisifer",
+        "label": "Luisifer Instagram"
+      },
+      {
+        "type": "text",
+        "id": "social_youtube_luisifer",
+        "label": "Luisifer Youtube"
+      },
+      {
+        "type": "text",
+        "id": "social_vimeo_luisifer",
+        "label": "Luisifer Vimeo"
+      },
+      {
+        "type": "text",
+        "id": "social_tumblr_luisifer",
+        "label": "Luisifer Tumblr"
+      }
+    ]
+  },
+  {
+    "name": "Cart",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "cart_notes_enable",
+        "label": "Enable cart notes",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Cookies",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "cookies_enable",
+        "label": "Enable Cookie Message",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Favicon",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon image",
+        "info": "Will be scaled down to 32 x 32px"
+      }
+    ]
+  }
+]

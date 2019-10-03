@@ -1,0 +1,24 @@
+{%- if settings.cookies_enable -%}
+  <div class="message-cookie">
+    <div>
+      <div class="message-content">{{ 'layout.cookie.message_html' | t }}</div>
+      <a class="btn close-cookie">{{ 'layout.cookie.accept_cookies' | t}}</a>
+    </div>
+  </div>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', function() {
+
+      if($.cookie('teethCookieAccept') !== 'yes' ){
+        $(".message-cookie").css('display','block');
+      }
+
+      $('.close-cookie').on('click', function () {
+        $.cookie('teethCookieAccept', 'yes', {expires : 30});
+        $(".message-cookie").css('display','none');
+      });
+    });
+
+  </script>
+{%- endif -%}
+

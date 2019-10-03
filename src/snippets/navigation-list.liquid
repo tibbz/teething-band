@@ -1,0 +1,54 @@
+{%- capture existing_blocks -%}{%- for block in section.blocks -%}
+  {%- assign item = block.settings.attached_item | plus: 0 -%}
+  {{ item }}
+{%- endfor -%}{%- endcapture -%}
+{%- capture open_default -%}{%- for block in section.blocks -%}
+  {%- assign open_default = block.settings.open_default -%}
+  {%- assign item = block.settings.attached_item | plus: 0 -%}
+  {{ open_default }},{%- endfor -%}{%- endcapture -%}
+
+  {%- assign open_default_array = open_default | split: ',' -%}
+
+{{ mobile_list_array }}
+
+{%- for link in linklists[navigation-list].links -%}
+  {%- capture megamenu_to_attach -%}{{ forloop.index0 | plus: 1 }}{%- endcapture -%}
+  {%- assign child_list_handle = link.title | handleize -%}
+  {%- assign megamenu_style = '' -%}
+  {%- assign mobile_menu = false -%}
+
+  {%- if existing_blocks contains forloop.index -%}
+    {%- assign megamenu_style = 'contain-mega' -%}
+    {%- assign mobile_menu = true -%}
+  {%- endif -%}
+
+  <li class="menu-item {{ class }}{% if link.active %} site-nav--active{% endif %} {{ child_list_handle }}{% if open_default_array[forloop.index0] contains 'true' and mobile_active %} is-active{% endif  %} {{ megamenu_style }}">
+    {%- if link.url == '#' -%}
+      <span class="site-nav__link">{{ link.title }}</span>
+    {%- elsif mobile_active and mobile_menu -%}
+      <a class="site-nav__link" href="#">{{ link.title }}</a>
+    {%- else -%}
+      <a href="{{ link.url }}" class="site-nav__link">{{ link.title }}</a>
+    {%- endif -%}
+    {%- if mobile_active == true -%}
+      {%- assign contains_megamenu = false -%}
+      {%- assign index_item = forloop.index -%}
+      {%- for block in section.blocks -%}
+        {%- assign item = block.settings.attached_item | plus: 0 -%}
+        {%- if item == index_item -%}
+          {%- assign contains_megamenu = true -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- if contains_megamenu -%}
+        {%- for block in section.blocks -%}
+          {%- assign item = block.settings.attached_item | plus: 0 -%}
+          {%- if item == index_item -%}
+            <ul>
+              {%- include 'megamenu-mobile' -%}
+            </ul>
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+    {%- endif -%}
+  </li>
+{%- endfor -%}
